@@ -1,5 +1,5 @@
-import { Text, View, Image, StyleSheet } from "react-native";
-
+import { View, Image, StyleSheet } from "react-native";
+import Text from "./Text";
 const RepositoryItem = ({ item }) => {
   const formatCount = (count) => {
     if (count >= 1000) {
@@ -38,9 +38,6 @@ const RepositoryItem = ({ item }) => {
       justifyContent: "space-around",
       marginTop: 10,
     },
-    statsItem: {
-      fontWeight: "bold",
-    },
     statsItemText: {
       color: "grey",
     },
@@ -61,7 +58,7 @@ const RepositoryItem = ({ item }) => {
       <View style={styles.flexContainer}>
         <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
         <View style={[styles.flexColumn, styles.details]}>
-          <Text style={[styles.statsItem, styles.flexItem]}>
+          <Text style={styles.flexItem} fontWeight="bold">
             {item.fullName}
           </Text>
           <Text style={styles.flexItem}>{item.description}</Text>
@@ -72,22 +69,20 @@ const RepositoryItem = ({ item }) => {
       </View>
       <View style={styles.stats}>
         <View>
-          <Text style={styles.statsItem}>
-            {formatCount(item.stargazersCount)}
-          </Text>
+          <Text fontWeight="bold">{formatCount(item.stargazersCount)}</Text>
           <Text style={styles.statsItemText}>Stars</Text>
         </View>
         <View>
-          <Text style={styles.statsItem}>{formatCount(item.forksCount)}</Text>
+          <Text fontWeight="bold">{formatCount(item.forksCount)}</Text>
           <Text style={styles.statsItemText}>Forks</Text>
         </View>
         <View>
-          <Text style={styles.statsItem}>{item.reviewCount}</Text>
+          <Text fontWeight="bold">{item.reviewCount}</Text>
           <Text style={styles.statsItemText}>Reviews</Text>
         </View>
         <View>
-          <Text style={styles.statsItem}>{item.ratingAverage}</Text>
-          <Text style={styles.statsItemText}>Rating</Text>
+          <Text fontWeight="bold">{item.ratingAverage}</Text>
+          <Text fontSize="subheading">Rating</Text>
         </View>
       </View>
     </View>
