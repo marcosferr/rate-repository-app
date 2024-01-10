@@ -1,6 +1,9 @@
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Pressable } from "react-native";
 import Text from "./Text";
 import { Link } from "react-router-native";
+import useUser from "../hooks/useUser";
+import useAuthStorage from "../hooks/useAuthStorage";
+import { useApolloClient } from "@apollo/client";
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
@@ -19,15 +22,30 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const { user } = useUser();
+  const authStorage = useAuthStorage();
+  const apolloClient = useApolloClient();
+  const handleSignOut = () => {
+    authStorage.removeAccessToken();
+    apolloClient.resetStore();
+  };
+  console.log(user);
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <Link to="/">
           <Text style={styles.text}>Repositories</Text>
         </Link>
-        <Link to="/signin">
-          <Text style={styles.text}>Sign In</Text>
-        </Link>
+
+        {user ? (
+          <Pressable onPress={handleSignOut}>
+            <Text style={styles.text}>Sign Out</Text>
+          </Pressable>
+        ) : (
+          <Link to="/signin">
+            <Text style={styles.text}>Sign In</Text>
+          </Link>
+        )}
       </ScrollView>
     </View>
   );
