@@ -14,10 +14,9 @@ const RepositoryList = () => {
   const { repositories } = useRepositories();
 
   // Get the nodes from the edges array
-  const repositoryNodes =
-    repositories !== undefined
-      ? repositories.edges.map((edge) => edge.node)
-      : [];
+  const repositoryNodes = repositories
+    ? repositories.repositories.edges.map((edge) => edge.node)
+    : [];
   return (
     <FlatList
       data={repositoryNodes}
