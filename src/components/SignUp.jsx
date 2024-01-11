@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Button } from "react-native";
-import { Formik, Field } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import FormikTextInput from "./FormikTextInput";
 import { useMutation } from "@apollo/client";
@@ -8,7 +8,7 @@ import { CREATE_USER } from "../graphql/mutations";
 import useSignIn from "../hooks/useSignIn";
 const SignUp = () => {
   const [createUser] = useMutation(CREATE_USER);
-
+  const [signIn] = useSignIn();
   const initialValues = {
     username: "",
     password: "",
@@ -35,7 +35,7 @@ const SignUp = () => {
       await createUser({
         variables: { user: { username, password } },
       });
-      useSignIn({ username, password });
+      signIn({ username, password });
     } catch (e) {
       console.log("Failed to create user: ", e);
     }
@@ -50,19 +50,13 @@ const SignUp = () => {
     >
       {({ handleSubmit }) => (
         <View>
-          <Field
-            component={FormikTextInput}
-            name="username"
-            placeholder="Username"
-          />
-          <Field
-            component={FormikTextInput}
+          <FormikTextInput name="username" placeholder="Username" />
+          <FormikTextInput
             name="password"
             placeholder="Password"
             secureTextEntry
           />
-          <Field
-            component={FormikTextInput}
+          <FormikTextInput
             name="passwordConfirmation"
             placeholder="Confirm Password"
             secureTextEntry
