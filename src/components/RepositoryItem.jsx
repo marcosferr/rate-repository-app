@@ -1,6 +1,8 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Button } from "react-native";
+import { openURL } from "expo-linking";
+import { Link } from "react-router-native";
 import Text from "./Text";
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showButton }) => {
   const formatCount = (count) => {
     if (count >= 1000) {
       const formattedCount = (count / 1000).toFixed(1);
@@ -54,13 +56,22 @@ const RepositoryItem = ({ item }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repositoryItem">
       <View style={styles.flexContainer}>
         <Image style={styles.image} source={{ uri: item.ownerAvatarUrl }} />
         <View style={[styles.flexColumn, styles.details]}>
-          <Text style={styles.flexItem} fontWeight="bold">
-            {item.fullName}
-          </Text>
+          {!showButton && (
+            <Link to={`/repositories/${item.id}`}>
+              <Text style={styles.flexItem} fontWeight="bold">
+                {item.fullName}
+              </Text>
+            </Link>
+          )}
+          {showButton && (
+            <Text style={styles.flexItem} fontWeight="bold">
+              {item.fullName}
+            </Text>
+          )}
           <Text style={styles.flexItem}>{item.description}</Text>
           <Text style={[styles.language, styles.flexItem]}>
             {item.language}
@@ -85,6 +96,9 @@ const RepositoryItem = ({ item }) => {
           <Text fontSize="subheading">Rating</Text>
         </View>
       </View>
+      {showButton && (
+        <Button title="Open in GitHub" onPress={() => openURL(item.url)} />
+      )}
     </View>
   );
 };
