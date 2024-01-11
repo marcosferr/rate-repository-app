@@ -4,7 +4,7 @@ import { View, FlatList, StyleSheet } from "react-native";
 import Text from "./Text";
 import { format, parseISO } from "date-fns";
 import useRepository from "../hooks/useRepository";
-const ReviewItem = ({ review }) => {
+export const ReviewItem = ({ review }) => {
   const styles = StyleSheet.create({
     container: {
       display: "flex",

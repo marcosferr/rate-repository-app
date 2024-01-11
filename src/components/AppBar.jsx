@@ -40,9 +40,14 @@ const AppBar = () => {
           <Text style={styles.text}>Create review</Text>
         </Link>
         {user ? (
-          <Pressable onPress={handleSignOut}>
-            <Text style={styles.text}>Sign Out</Text>
-          </Pressable>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Pressable onPress={handleSignOut}>
+              <Text style={styles.text}>Sign Out</Text>
+            </Pressable>
+            <Link to="/myreviews">
+              <Text style={styles.text}>My reviews</Text>
+            </Link>
+          </View>
         ) : (
           <View style={{ display: "flex", flexDirection: "row" }}>
             <Link to="/signin">

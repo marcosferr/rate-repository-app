@@ -30,14 +30,16 @@ const ReviewForm = () => {
 
   const handleSubmit = (values) => {
     const { ownerUsername, repositoryName, rating, review } = values;
+
+    console.log(values);
     try {
       createReview({
         variables: {
           review: {
-            ownerUsername,
+            ownerName: ownerUsername,
             repositoryName,
             rating: parseInt(rating),
-            review,
+            text: review,
           },
         },
       });
